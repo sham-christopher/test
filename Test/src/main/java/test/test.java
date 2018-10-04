@@ -1,12 +1,15 @@
 package test;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,7 +23,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 public class test {
 	
     static //Insert userids into a list
-    ArrayList<Object> UserIDs = new ArrayList();
+    ArrayList<Object> UserIDs = new ArrayList<>();
 	static String URL = "http://www.google.com";
 	String Browser = "Chrome";
 	static WebDriver driver;
@@ -33,9 +36,14 @@ public class test {
 		readExcel(filePath,fileName);
 	    System.out.println("\n"+UserIDs);
 
-	    for(int i=1;i<UserIDs.size();i++) {
+	    for(int i=0;i<UserIDs.size();i++) {
 			launchBrowser();
-
+			WebElement username =  driver.findElement(By.id("lst-ib"));
+			System.out.println("Entering "+ UserIDs.get(i));
+			String UserID = UserIDs.get(i).toString();
+			username.sendKeys(UserID);
+			
+			driver.findElement(By.id(id))
 		}
 		
 }
@@ -65,10 +73,11 @@ public class test {
 	    int rowCount = Sheet.getLastRowNum()-Sheet.getFirstRowNum();
 
 	    //Create a loop over all the rows of excel file to read it
-	    for (int i = 1; i < rowCount+1; i++) {
+	    for (int i = ; i < rowCount+1; i++) {
 	        Row row = Sheet.getRow(i);
-	        //System.out.print(row.getCell(0).toString()+" ");
+	        //System.out.print(row.getCell(0).toString()+"\n");
             UserIDs.add(row.getCell(0).toString());
+            System.out.println(UserIDs);
 	    }
 	}
 	
